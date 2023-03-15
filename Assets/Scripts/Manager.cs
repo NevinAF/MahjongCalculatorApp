@@ -2,9 +2,24 @@ using UnityEngine;
 
 public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
 {
+	/// <summary> Encapsulated instance of the manager. </summary>
 	private static T _instance;
-	public static T Instance { 
+
+	/// <summary>
+	/// The instance of the manager.
+	/// If none exists, one will be created in the root of the scene.
+	/// </summary>
+	public static T Instance
+	{
 		get {
+#if UNITY_EDITOR
+			// If not playing, return the first instance found in the scene (as the instance will not have been set)
+			if (Application.isPlaying == false)
+			{
+				_instance = FindObjectOfType<T>();
+				return _instance;
+			}
+#endif
 			if (_instance == null)
 			{
 				_instance = FindObjectOfType<T>();
@@ -20,7 +35,9 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
 		private set => _instance = value;
 	}
 
-	public bool DontDestroy = false;
+	[Tooltip("If true, on awake, the manager will be set to be not destroyed when loading a new scene.")]
+	/// <summary> If true, on awake, the manager will be set to be not destroyed when loading a new scene. </summary>
+	public bool _DontDestroyOnLoad = false;
 
 	protected virtual void Awake()
 	{
@@ -34,7 +51,7 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
 		if (_instance == null)
 		{
 			Instance = this as T;
-			if (DontDestroy) DontDestroyOnLoad(gameObject);
+			if (_DontDestroyOnLoad) DontDestroyOnLoad(gameObject);
 		}
 		else
 		{

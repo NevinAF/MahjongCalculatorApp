@@ -12,7 +12,7 @@ using UnityEditor;
 public class TileGroupUI : UIBehaviour, ILayoutGroup
 {
 	public RectTransform RectTransform => (RectTransform)transform;
-    [NonSerialized] public List<TileUI> GroupTiles = new List<TileUI>();
+	[NonSerialized] public List<TileUI> GroupTiles = new List<TileUI>();
 
 	protected override void Awake()
 	{
@@ -64,22 +64,22 @@ public class TileGroupUI : UIBehaviour, ILayoutGroup
 		}
 	}
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        UpdateLayout();
-    }
+	protected override void OnEnable()
+	{
+		base.OnEnable();
+		UpdateLayout();
+	}
 
-    protected override void OnRectTransformDimensionsChange()
-    {
-        base.OnRectTransformDimensionsChange();
-        UpdateLayout();
-    }
+	protected override void OnRectTransformDimensionsChange()
+	{
+		base.OnRectTransformDimensionsChange();
+		UpdateLayout();
+	}
 
 	protected override void OnCanvasHierarchyChanged()
 	{
 		base.OnCanvasHierarchyChanged();
-        UpdateLayout();
+		UpdateLayout();
 	}
 
 
@@ -87,11 +87,11 @@ public class TileGroupUI : UIBehaviour, ILayoutGroup
 	{
 		GroupTiles.Clear();
 
-        foreach (Transform child in transform)
-        {
+		foreach (Transform child in transform)
+		{
 			var tile = child.GetComponent<TileUI>();
-            if (tile != null) GroupTiles.Add(tile);
-        }
+			if (tile != null) GroupTiles.Add(tile);
+		}
 
 		DrivenRectTransformTracker dt = new DrivenRectTransformTracker();
 		dt.Clear();
@@ -127,7 +127,7 @@ public class TileGroupUI : UIBehaviour, ILayoutGroup
 
 	// protected override void OnValidate()
 	// {
-    //     base.OnValidate();
+	//     base.OnValidate();
 	// }
 
 
